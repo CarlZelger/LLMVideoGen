@@ -31,22 +31,25 @@ def generateVideo(query: str,length: int):
     
     topic = query
     pages = length
-    titles = getDataForPP(query, length)
-
+    titles = getDataForPP(query, 4)
+    print(len(titles))
+    
     text_thread = threading.Thread(target=generate_text_content)
     text_thread.start()
-    # image_thread = threading.Thread(target=generate_image_content)
-    # image_thread.start()
+    image_thread = threading.Thread(target=generate_image_content)
+    image_thread.start()
 
     text_thread.join()
-    # image_thread.join()
+    print("content: ",len(content))
+    image_thread.join()
+    print("images: ",images)
 
-    # pp = generatePresentation(titles, content, images)
+    pp = generatePresentation(titles, content, images)
     
     elapsed_time = time.time() - start_time
     print(f"Time elapsed: {elapsed_time:.2f} seconds")
     
-    # os.startfile(pp)
+    os.startfile(pp)
     
 
 def generateImprovements():

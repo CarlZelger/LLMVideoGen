@@ -12,7 +12,7 @@ def getPageByIndex(i: int):
     slide = prs.slides.add_slide(title_slide_layout)
     fill = slide.background.fill
     fill.solid()
-    fill.fore_color.rgb = RGBColor((0, 0, 0))
+    fill.fore_color.rgb = RGBColor(0, 0, 0)
     return slide
 
 def setTitle(slide, title: str, left=Inches(0.5), top=Inches(0.5), width=Inches(8), height=Inches(1)):
@@ -50,8 +50,8 @@ def addImage(slide, path):
     height = Inches(6.3)  # Height of the image
     
     slide.shapes.add_picture(path, left, top,height=height)
-    if os.path.exists(path):
-        os.remove(path)
+    # if os.path.exists(path):
+    #     os.remove(path)
     
     
 def addEndSlide():
