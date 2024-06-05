@@ -1,0 +1,11 @@
+Bachelor-Arbeit:
+
+Programming Language:
+
+LLM: ChatGPT
+
+Video: https://app.elai.io/ (Avatar)
+Powerpoint?
+single frames?
+
+Voiceover: elevenlabs

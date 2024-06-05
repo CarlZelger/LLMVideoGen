@@ -1,0 +1,50 @@
+<!-- templates/myform.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adder</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#plus').click(function() {
+                var currentNumber = parseInt($('#num').text(), 10);
+                $.ajax({
+                    url: '/add',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({number: currentNumber}),
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#num').text(response.new_number);
+                    },
+                    error: function() {
+                        alert('Error updating number');
+                    }
+                });
+            });
+            $('#minus').click(function() {
+                var currentNumber = parseInt($('#num').text(), 10);
+                $.ajax({
+                    url: '/sub',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({number: currentNumber}),
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#num').text(response.new_number);
+                    },
+                    error: function() {
+                        alert('Error updating number');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <p id="num">1</p>
+    <button id="plus">+!</button>
+    <button id="minus">-</button>
+</body>
+</html>

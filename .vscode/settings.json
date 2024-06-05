@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./Flask-Project/flaskr/APIs/l",
+        "./Flask-Project/flaskr/APIs/l"
+    ]
+}
