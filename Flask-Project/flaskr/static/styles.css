@@ -92,3 +92,21 @@ h1{
     top: 20%;
     left: 20%;
 }
+
+.improvements{
+    margin-top: 30%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.improvements button{
+    font-size: 130%;
+    height: 40px;
+    background-color: transparent;
+    border: #7de748 solid 1px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 3px 3px #555555;
+    margin: 20px;
+}

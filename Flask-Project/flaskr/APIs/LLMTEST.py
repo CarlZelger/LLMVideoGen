@@ -40,6 +40,13 @@ def askLLM(q,len,model):
             return {"title": "Request failed"}
     
     
-for i in range(4):   
-    query = f"answer with only four short bullet points nothing more (no punctuation marks),  6 words max, insert a semocolon after every bulletpoint, about photosynthesis."
-    print(f"{models[i]}: \n {askLLM(query,40,3)}\n")
+# for i in range(10):   
+#     query = f"answer with only four short bullet points nothing more (no punctuation marks),  6 words max, insert a semocolon after every bulletpoint, about photosynthesis."
+#     print(f"{askLLM(query,40,3)}\n")
+query = f"write me a coherent text about 'light energy absorption' in the context of photosynthesis; the limit is 700 words; NO introduction NO Notes JUST text"
+output= askLLM(query,800,3)
+query2 =f"provide the reader with a simple option to improve this text: '{output}' No longer then 4 words, no additional text "
+for i in range(4):
+    # print(models[i],":  ")
+    print(askLLM(query2,20,3),"\n")
+    
