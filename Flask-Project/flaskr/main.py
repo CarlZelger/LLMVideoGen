@@ -16,8 +16,10 @@ content:Dict[str, str]
 #The pagetitle acts as key and the filepath to the image is the value
 images:Dict[str, str]
 
+optionalTitle:str
+
 def generateVideo(query: str,length: int):
-    global topic, pages, titles, content, images
+    global topic, pages, titles, content, images, optionalTitle
     start_time = time.time()
     
     def generate_text_content():
@@ -31,7 +33,8 @@ def generateVideo(query: str,length: int):
     
     topic = query
     pages = length
-    titles = getDataForPP(query, 4)
+    titles = getDataForPP(query, 5)
+    optionalTitle = titles.pop()
     
     text_thread = threading.Thread(target=generate_text_content)
     text_thread.start()
@@ -56,10 +59,38 @@ def addQuestion():
     pp = generatePresentation(titles, content, images,question)
     # RENDER VIDEO
     os.startfile(pp)
+    
+def addTitleToVideo():
+    global titles, topic
+    titles += optionalTitle
+    def generate_text_content():
+        global content
+        content = generateText(topic, [optionalTitle])
+
+    def generate_image_content():
+        global images
+        images = generateImages(topic, titles)
+        
+    text_thread = threading.Thread(target=generate_text_content)
+    text_thread.start()
+    image_thread = threading.Thread(target=generate_image_content)
+    image_thread.start()
+    
+    text_thread.join()
+    image_thread.join()
+
+    pp = generatePresentation(titles, content, images)
+        
+    # RENDER VIDEO
+    os.startfile(pp)
 
 def getTopic():
     global topic
     return topic
+
+def getOptTitle():
+    global optionalTitle
+    return optionalTitle
 
     
     # flask --app flaskr --debug run  

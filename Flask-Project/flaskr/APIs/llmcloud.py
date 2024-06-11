@@ -75,10 +75,9 @@ def verbalImprovement():
 def addTopic():
     return 0
 
-def addQuestiones(titles: Dict[str,str],title: str):
+def addQuestiones(titles: List[str],topic: str):
     i = random.randint(0,len(titles)-1)
-    query = f"give me a simple question, without the answer about the following topic: "
-    query = f"give me one short and simple question, without providing an answer! about the following topic: {titles[i]} in the context of {title}; no formattion or additional text, JUST the question NO answer and NO additional Text"
+    query = f"give me one short and simple question, without providing an answer! about the following topic: {titles[i]} in the context of {topic}; no formattion or additional text, JUST the question NO answer and NO additional Text"
     ret = askLLM(query,30)
     ret = ret.replace(".","")
     ret = ret.replace("\n","")
@@ -88,9 +87,19 @@ def addQuestiones(titles: Dict[str,str],title: str):
     return ret
 
 
+def addTitle(titles: List[str],topic: str):
+    query = f"add one more item to this List of topics about {topic} : "
+    for t in titles:
+        query += (t +", ")
+    ret = askLLM(query,12)
+    # ret = ret.replace(".","")
+    # ret = ret.replace("\n","")
+    # ret = ret.replace(":","")
+    # ret = ret.replace("!","")
+    ret = ret.split(",")[0]
+    return ret
 
 
-# print(askLLM("explain engines"))
 
 
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from .main import addQuestion, getTopic, generateVideo
+from .main import addQuestion, addTitleToVideo, getOptTitle, getTopic, generateVideo
 
 bp = Blueprint('main', __name__)
 
@@ -68,12 +68,17 @@ def api():
 @bp.route('/video')
 def video():
     video_url = url_for('static',filename='videos/video.mp4')
-    # topic = getTopic()
+    optTitle = getOptTitle()
     topic = "getTopic()"
-    return render_template('videoPlayer.html', video_url=video_url, topic=topic)
+    return render_template('videoPlayer.html', video_url=video_url, topic=topic,optTitle = optTitle)
 
 @bp.route('/addQuestiones', methods=['POST'])
 def addQuestiones():
     video_url = "new URL"
     addQuestion()
     return jsonify(new_url=video_url)
+
+@bp.route('/addTitle', methods=['POST'])
+def addTitle():
+    addTitleToVideo()
+    return jsonify()

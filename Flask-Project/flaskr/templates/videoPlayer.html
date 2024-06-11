@@ -22,6 +22,20 @@
                     }
                 });
             });
+
+            $('#second').click(function() {
+                $.ajax({
+                    url: '/addTitle',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function(response) {
+                    },
+                    error: function() {
+                        alert('Error updating URL');
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -35,7 +49,7 @@
     </div>
     <div class="improvements">
         <button id="first">Make the text simpler</button>
-        <button id="second">Add "Banans" as an additional topic</button>
+        <button id="second">Add {{optTitle}} as an additional topic</button>
         <button id="third">Add Questiones</button>
     </div>
 </body>
