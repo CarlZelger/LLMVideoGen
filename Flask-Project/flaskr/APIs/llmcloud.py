@@ -9,7 +9,7 @@ from urllib3.util.retry import Retry
 
 
 def getDataForPP(topic,pages):
-    query = f"answer with only four short bullet points nothing more (no punctuation marks),  6 words max, insert a semocolon after every bulletpoint, about {topic}."
+    query = f"answer with only five short bullet points nothing more (no punctuation marks),  6 words max, insert a semocolon after every bulletpoint, about {topic}."
     ret = askLLM(query,30)
     retList = [item.strip().lstrip('• ').lstrip('\n').capitalize() for item in ret.split(";") if item.strip()]
     return retList
