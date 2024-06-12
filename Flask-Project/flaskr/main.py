@@ -20,7 +20,6 @@ optionalTitle:str
 
 def generateVideo(query: str,length: int):
     global topic, pages, titles, content, images, optionalTitle
-    start_time = time.time()
     
     def generate_text_content():
         global content
@@ -35,6 +34,7 @@ def generateVideo(query: str,length: int):
     pages = length
     titles = getDataForPP(query, 5)
     optionalTitle = titles.pop()
+    optionalTitle = optionalTitle.replace(".","")
     
     text_thread = threading.Thread(target=generate_text_content)
     text_thread.start()
@@ -45,9 +45,6 @@ def generateVideo(query: str,length: int):
     image_thread.join()
 
     pp = generatePresentation(titles, content, images)
-    
-    elapsed_time = time.time() - start_time
-    print(f"Time elapsed: {elapsed_time:.2f} seconds")
     
     # os.startfile(pp)
     
@@ -62,10 +59,11 @@ def addQuestion():
     
 def addTitleToVideo():
     global titles, topic
-    titles += optionalTitle
+    titles.append(optionalTitle)
     def generate_text_content():
         global content
-        content = generateText(topic, [optionalTitle])
+        additionalContent = generateText(topic, [optionalTitle])
+        content.update(additionalContent)
 
     def generate_image_content():
         global images

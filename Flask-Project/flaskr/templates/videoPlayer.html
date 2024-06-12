@@ -16,6 +16,7 @@
                     dataType: 'json',
                     success: function(response) {
                         $('#video').attr('src',response.new_url);
+                        $('#third').hide()
                     },
                     error: function() {
                         alert('Error updating URL');
@@ -30,7 +31,11 @@
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function(response) {
-                    },
+                        if (window.getComputedStyle(document.getElementById('third')).display === 'none') {
+                            $('#third').show();
+                        }
+                        $('#second').hide();
+                    },                    
                     error: function() {
                         alert('Error updating URL');
                     }
@@ -49,7 +54,7 @@
     </div>
     <div class="improvements">
         <button id="first">Make the text simpler</button>
-        <button id="second">Add {{optTitle}} as an additional topic</button>
+        <button id="second">Add "{{optTitle}}" as an additional topic</button>
         <button id="third">Add Questiones</button>
     </div>
 </body>

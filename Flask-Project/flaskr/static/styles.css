@@ -110,3 +110,8 @@ h1{
     box-shadow: 3px 3px #555555;
     margin: 20px;
 }
+
+.improvements button:active {
+    box-shadow: 1px 1px #555555;
+    transform: translate(2px, 2px);
+}

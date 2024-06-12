@@ -69,7 +69,7 @@ def api():
 def video():
     video_url = url_for('static',filename='videos/video.mp4')
     optTitle = getOptTitle()
-    topic = "getTopic()"
+    topic = getTopic()
     return render_template('videoPlayer.html', video_url=video_url, topic=topic,optTitle = optTitle)
 
 @bp.route('/addQuestiones', methods=['POST'])
