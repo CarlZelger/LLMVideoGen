@@ -17,9 +17,10 @@ content:Dict[str, str]
 images:Dict[str, str]
 
 optionalTitle:str
+suggestion:str
 
 def generateVideo(query: str,length: int):
-    global topic, pages, titles, content, images, optionalTitle
+    global topic, pages, titles, content, images, optionalTitle,suggestion
     
     def generate_text_content():
         global content
@@ -28,8 +29,7 @@ def generateVideo(query: str,length: int):
     def generate_image_content():
         global images
         images = generateImages(query, titles)
-    
-    
+        
     topic = query
     pages = length
     titles = getDataForPP(query, 5)
@@ -43,6 +43,9 @@ def generateVideo(query: str,length: int):
 
     text_thread.join()
     image_thread.join()
+    
+    text = random.choice(list(content.values()))
+    suggestion = generateSuggestion(text)
 
     pp = generatePresentation(titles, content, images)
     
@@ -81,6 +84,16 @@ def addTitleToVideo():
         
     # RENDER VIDEO
     os.startfile(pp)
+    
+def applySuggestion():
+    global titles, content, images, suggestion
+    content = applySuggestion(content,suggestion)
+    text = random.choice(list(content.values()))
+    suggestion = generateSuggestion(text)
+    pp = generatePresentation(titles, content, images)
+        
+    # RENDER VIDEO
+    os.startfile(pp)
 
 def getTopic():
     global topic
@@ -89,6 +102,10 @@ def getTopic():
 def getOptTitle():
     global optionalTitle
     return optionalTitle
+
+def getSuggestion():
+    global suggestion
+    return suggestion
 
     
     # flask --app flaskr --debug run  

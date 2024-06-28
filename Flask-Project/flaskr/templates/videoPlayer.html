@@ -8,15 +8,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#third').click(function() {
+            $('#first').click(function() {
                 $.ajax({
-                    url: '/addQuestiones',
+                    url: '/applySug',
                     type: 'POST',
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function(response) {
-                        $('#video').attr('src',response.new_url);
-                        $('#third').hide()
+                        $('#first').innerHTML(response.new_sug);
                     },
                     error: function() {
                         alert('Error updating URL');
@@ -41,6 +40,24 @@
                     }
                 });
             });
+
+            $('#third').click(function() {
+                $.ajax({
+                    url: '/addQuestiones',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#video').attr('src',response.new_url);
+                        $('#third').hide()
+                    },
+                    error: function() {
+                        alert('Error updating URL');
+                    }
+                });
+            });
+
+            
         });
     </script>
 </head>
@@ -53,7 +70,7 @@
         </video>
     </div>
     <div class="improvements">
-        <button id="first">Make the text simpler</button>
+        <button id="first">{{suggestion}}</button>
         <button id="second">Add "{{optTitle}}" as an additional topic</button>
         <button id="third">Add Questiones</button>
     </div>
