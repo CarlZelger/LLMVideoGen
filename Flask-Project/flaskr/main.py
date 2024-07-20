@@ -87,6 +87,7 @@ def addTitleToVideo():
     
 def applySuggestion():
     global titles, content, images, suggestion
+    
     content = applySuggestion(content,suggestion)
     text = random.choice(list(content.values()))
     suggestion = generateSuggestion(text)
@@ -109,3 +110,7 @@ def getSuggestion():
 
     
     # flask --app flaskr --debug run  
+    # requests
+    # openai
+    # python-pptx
+    #pexels_api

@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import random
 from typing import Dict, List
+from unicodedata import numeric
 import requests
 import json
 from requests.adapters import HTTPAdapter
@@ -10,11 +11,25 @@ from openai import OpenAI
 
 
 def getDataForPP(topic,pages):
-    query = f"answer with only five short bullet points nothing more (no punctuation marks),  6 words max, insert a semocolon after every bulletpoint, about {topic}."
-    ret = askLLM(query,30)
-    print(ret)
-    retList = [item.strip().lstrip('• ').lstrip('\n').capitalize() for item in ret.split(";") if item.strip()]
-    return retList
+    query = f"give four short bullet points no entire text,  3 words max , insert a semocolon after every bulletpoint, about {topic}."
+    text = askLLM(query,30)
+    print(text)
+    text = text.replace("• ","")
+    text = text.replace("-","")
+    text = text.replace("*","")
+    text = text.replace(".","")
+    sym = ";" if ";" in text else "\n"
+    list = [x.replace("\n","") for x in text.split(sym)]
+    ret = []
+    for r in list:
+        if ":" in r:
+            ret.append(r.split(":")[0].strip().capitalize())
+        elif (r[0]).isnumeric():
+            ret.append(r[1:].strip().capitalize())
+        else:
+            ret.append(r.strip().capitalize())
+            
+    return ret
     
 
 def make_request(topic: str, title: str, url: str, headers: dict) -> Dict[str, str]:
