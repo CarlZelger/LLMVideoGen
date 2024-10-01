@@ -2,22 +2,23 @@ import threading
 from typing import Dict, List
 from flaskr.APIs.llmcloud import *
 from flaskr.APIs.pptxPython import *
+from flaskr.APIs.elaiio import *
 from flaskr.APIs.pexels import generateImages
 import time
 
 #topic of the video
-topic:str
+topic:str = "tmp"
 #Pagecounter
 pages:int
 #titles of the different Pages
-titles:List[str]
+titles:List[str] = ["tmp1","tmp2"]
 #The pagetitle acts as key and the text is the value
 content:Dict[str, str]
 #The pagetitle acts as key and the filepath to the image is the value
 images:Dict[str, str]
 
-optionalTitle:str
-suggestion:str
+optionalTitle:str = "tmp"
+suggestion:str = "tmp"
 
 def generateVideo(query: str,length: int):
     global topic, pages, titles, content, images, optionalTitle,suggestion
@@ -48,8 +49,10 @@ def generateVideo(query: str,length: int):
     suggestion = generateSuggestion(text)
 
     pp = generatePresentation(titles, content, images)
-    
-    # os.startfile(pp)
+    # ret = render(pp)
+    # if ret != "error":
+    # os.startfile(ret)
+        
     
 
 
@@ -96,9 +99,28 @@ def applySuggestion():
     # RENDER VIDEO
     os.startfile(pp)
 
+def applyUInput(title:str, input:str):
+    global titles, content, images
+    newContent = applyUserInput(title,input)
+    content[title] = newContent
+    pp = generatePresentation(titles, content, images)
+        
+    # RENDER VIDEO
+    os.startfile(pp)
+    
+    
 def getTopic():
     global topic
     return topic
+
+def getTitles():
+    global titles
+    return titles
+
+def getContent(title):
+    global content
+    return content[title]
+
 
 def getOptTitle():
     global optionalTitle

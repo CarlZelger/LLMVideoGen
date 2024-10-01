@@ -26,9 +26,7 @@ def askLLM(q,len,model):
                 break
             response = requests.request("POST", url, headers=headers, data=payload)
             data = response.json()
-            if(len == 701):
-                print(response)
-                print(data)
+            print(data)
             ret = data['choices'][0]['text']
             return ret
         except KeyError:

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from .main import addQuestion, addTitleToVideo, getOptTitle, getSuggestion, getTopic, generateVideo, applySuggestion
+from .main import addQuestion, addTitleToVideo, getOptTitle, getSuggestion, getTopic, generateVideo, applySuggestion, getTitles, applyUInput
 
 bp = Blueprint('main', __name__)
 
@@ -67,11 +67,13 @@ def api():
 
 @bp.route('/video')
 def video():
-    video_url = url_for('static',filename='videos/video.mp4')
+    video_url = url_for('static',filename='Photosynthesis.mp4')
+    # video_url = "Photosynthesis.mp4"
     optTitle = getOptTitle()
     topic = getTopic()
     sug = getSuggestion()
-    return render_template('videoPlayer.html', video_url=video_url, topic=topic,optTitle = optTitle, suggestion= sug )
+    t = getTitles()
+    return render_template('videoPlayer.html', video_url=video_url, topic=topic,optTitle = optTitle, suggestion= sug, titles = t )
 
 @bp.route('/addQuestiones', methods=['POST'])
 def addQuestiones():
@@ -89,3 +91,12 @@ def addSug():
     applySuggestion()
     sug = getSuggestion()
     return jsonify(new_sug=sug)
+
+@bp.route('/userInput', methods=['POST'])
+def userInput():
+    data = request.get_json()
+    user_input = data.get('user_input')
+    topic = data.get('topic')
+    print(user_input,topic)
+    applyUInput(topic,user_input)
+    return jsonify()

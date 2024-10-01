@@ -94,15 +94,16 @@ h1{
 }
 
 .improvements{
-    margin-top: 30%;
+    margin-top: 27%;
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .improvements button{
     font-size: 130%;
-    height: 40px;
+    height: 70px;
     background-color: transparent;
     border: #7de748 solid 1px;
     border-radius: 12px;
@@ -114,4 +115,19 @@ h1{
 .improvements button:active {
     box-shadow: 1px 1px #555555;
     transform: translate(2px, 2px);
+}
+
+.improvements select {
+    height: 40px;
+    width: 150px;
+}
+
+.improvements input {
+    height: 35px;
+    width: 150px;   
+}
+
+.improvements #first{
+    height: 70px;
+    width: auto;
 }

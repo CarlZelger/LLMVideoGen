@@ -3,6 +3,7 @@ import random
 from typing import Dict, List
 from unicodedata import numeric
 import requests
+from .. import main
 import json
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -12,7 +13,9 @@ from openai import OpenAI
 
 def getDataForPP(topic,pages):
     query = f"give four short bullet points no entire text,  3 words max , insert a semocolon after every bulletpoint, about {topic}."
-    text = askLLM(query,30)
+    text = ""
+    while(len(text) == 0):
+        text = askLLM(query,30)
     print(text)
     text = text.replace("• ","")
     text = text.replace("-","")
@@ -30,10 +33,9 @@ def getDataForPP(topic,pages):
             ret.append(r.strip().capitalize())
             
     return ret
-    
 
 def make_request(topic: str, title: str, url: str, headers: dict) -> Dict[str, str]:
-    query = f"write me a coherent text about '{title}' in the context of {topic}; the limit is 300 words dont exeed it; NO introduction NO Notes JUST text"
+    query = f"write me a coherent text about '{title}' in the context of {topic}; the limit is 100 words dont exeed it; NO introduction NO Notes JUST text"
     content = askLLM(query,700)
     return {title: content}
 
@@ -110,6 +112,7 @@ def addTopic():
     return 0
 
 def addQuestiones(titles: List[str],topic: str):
+    # add Topic
     i = random.randint(0,len(titles)-1)
     query = f"give me one short and simple question, without providing an answer! about the following topic: {titles[i]} in the context of {topic}; no formattion or additional text, JUST the question NO answer and NO additional Text"
     ret = askLLM(query,30)
@@ -143,6 +146,12 @@ def applySuggestion(content: Dict[str,str],sug: str):
         ret[k] = new_v
     return ret
 
+def applyUserInput(title,input):
+    con = main.getContent(title)
+    query = f"apply {input} to text {con}, no additional introduction"
+    newText = askLLM(query,700)
+    return newText
+    
 
 
 
